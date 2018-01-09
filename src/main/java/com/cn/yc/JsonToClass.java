@@ -16,10 +16,9 @@ public class JsonToClass {
         AbstractConvertJson abstractConvertJson = new CreateConvertJson();
         try {
             List<File> fileList = abstractConvertJson.createJavaClass(json, "hzm");
-            fileList.forEach(file -> System.out.println(file.getName() + " " + file.getPath()));
+            fileList.forEach(file -> System.out.println(file.getName() + " " + file.getAbsolutePath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

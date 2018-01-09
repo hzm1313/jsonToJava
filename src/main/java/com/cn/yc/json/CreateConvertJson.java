@@ -71,7 +71,8 @@ public class CreateConvertJson extends AbstractConvertJson {
                 }
         );
         javaContent.append("}");
-        FileUtils.writeFile(javaContent.toString(), className);
+        File file = FileUtils.writeFile(javaContent.toString(), className);
+        fileList.add(file);
         return fileList;
     }
 
@@ -87,9 +88,9 @@ public class CreateConvertJson extends AbstractConvertJson {
                 {
                     Object valueObject = jsonObject.get(obj);
                     if (valueObject instanceof String) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     } else if (valueObject instanceof Array) {
-                        javaContent.append("private " + " List<" + valueObject + "> " + valueObject + "List;\n");
+                        javaContent.append("private " + " List<" + obj + "> " + obj + "List;\n");
                         //TODO 有几率出现覆盖
                         JSONArray jsonArray = (JSONArray) valueObject;
                         if (jsonArray != null && jsonArray.size() > 0) {
@@ -104,28 +105,29 @@ public class CreateConvertJson extends AbstractConvertJson {
                             }
                         }
                     } else if (valueObject instanceof BigDecimal) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     } else if (valueObject instanceof Boolean) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     } else if (valueObject instanceof Character) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     } else if (valueObject instanceof Float) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     } else if (valueObject instanceof Double) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     } else if (valueObject instanceof Byte) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     } else if (valueObject instanceof Short) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     } else if (valueObject instanceof Integer) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     } else if (valueObject instanceof Long) {
-                        javaContent.append("private " + " String " + valueObject + ";\n");
+                        javaContent.append("private " + " String " + obj + ";\n");
                     }
                 }
         );
         javaContent.append("}");
         File file = FileUtils.writeFile(javaContent.toString(), className);
+        fileList.add(file);
         return fileList;
     }
 }
