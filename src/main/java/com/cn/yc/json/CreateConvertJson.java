@@ -43,7 +43,7 @@ public class CreateConvertJson extends AbstractConvertJson {
                             try {
                                 fileListTmp = createJavaClass(jsonArray.get(0).toString());
                             } catch (IOException e) {
-                                LOGGER.error("create array error {}",e.getMessage());
+                                LOGGER.error("create array error {}", e.getMessage());
                             }
                             for (File file : fileListTmp) {
                                 fileList.add(file);
@@ -89,19 +89,34 @@ public class CreateConvertJson extends AbstractConvertJson {
                     Object valueObject = jsonObject.get(obj);
                     if (valueObject instanceof String) {
                         javaContent.append("private " + " String " + obj + ";\n");
-                    } else if (valueObject instanceof Array) {
-                        javaContent.append("private " + " List<" + obj + "> " + obj + "List;\n");
+                    } else if (valueObject instanceof JSONObject) {
+                        javaContent.append("private " + " " + obj + " " + obj + ";\n");
+                        List<File> fileListTmp = null;
+                        try {
+                            fileListTmp = createJavaClass(valueObject.toString(), obj.toString());
+                        } catch (IOException e) {
+                            LOGGER.error("valueObject instanceof JSONObjec array error {}", e.getMessage());
+                        }
+                        fileListTmp.forEach(f -> fileList.add(f));
+                    } else if (valueObject instanceof JSONArray) {
+                      //  javaContent.append("private " + " List<" + obj + "> " + obj + ";\n");
                         //TODO 有几率出现覆盖
                         JSONArray jsonArray = (JSONArray) valueObject;
                         if (jsonArray != null && jsonArray.size() > 0) {
                             List<File> fileListTmp = null;
                             try {
-                                fileListTmp = createJavaClass(jsonArray.get(0).toString());
+                                Object objectTmp = jsonArray.get(0);
+                                if (objectTmp instanceof String) {
+                                    int i=0;
+                                    jsonArray.forEach((a) -> {
+                                        javaContent.append("private " + " String value" + i + ";\n");
+                                    });
+                                } else if(objectTmp instanceof JSONObject){
+                                    fileListTmp = createJavaClass(jsonArray.get(0).toString());
+                                    fileListTmp.forEach(f -> fileList.add(f));
+                                }
                             } catch (IOException e) {
-                                LOGGER.error("create array error {}",e.getMessage());
-                            }
-                            for (File file : fileListTmp) {
-                                fileList.add(file);
+                                LOGGER.error("create array error {}", e.getMessage());
                             }
                         }
                     } else if (valueObject instanceof BigDecimal) {
