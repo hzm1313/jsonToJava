@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by DT167 on 2018/1/8.
  */
-public class CreateConvertJson extends AbstractConvertJson {
+public class CreateConvertJson implements AbstractConvertJson {
     private static Logger LOGGER = LoggerFactory.getLogger(CreateConvertJson.class);
 
     @Override

@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * Created by DT167 on 2018/1/8.
  */
-public abstract class AbstractConvertJson {
-    public abstract List<File> createJavaClass(String json) throws IOException;
+public interface AbstractConvertJson {
+    public List<File> createJavaClass(String json) throws IOException;
 
-    public abstract List<File> createJavaClass(String json,String className) throws IOException;
+    public List<File> createJavaClass(String json, String className) throws IOException;
 }
